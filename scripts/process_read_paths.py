@@ -16,6 +16,7 @@ def add_fastq_paths(tsv_file, path_file, out_file):
     # Read in the paths file
     df_paths = pd.read_csv(path_file, keep_default_na=False)
     
+    #Edit the extension to match that of the reads you are processing
     forward_ext = "1.fq.gz"
     reverse_ext = "2.fq.gz"
     
@@ -29,6 +30,11 @@ def add_fastq_paths(tsv_file, path_file, out_file):
         
         # Check for each sample in the manifest
         for sample_name in df_manifest['sample_name']:
+            # Note you need to edit the sample_name if it contains more than just the sample name e.g. sample_name total genomic DNA
+            # For the example abvove you could use the below:
+
+            # sample_name = sample_name.split(" ")[0]
+
             # Ensure sample name matches and is part of the full path
             if sample_name in mac_path:
                 if forward_ext in mac_path:
@@ -45,6 +51,7 @@ def add_fastq_paths(tsv_file, path_file, out_file):
     
     # Function to convert list to comma-separated string, or empty string if no paths
     def paths_to_str(sample_name, paths_dict):
+        # Note if splitting the sample name, the same needs to be applied here.
         return ','.join(paths_dict.get(sample_name, [])) if sample_name in paths_dict else ''
     
     # Add paths to the manifest dataframe
