@@ -16,7 +16,7 @@ for directory in /path/to/manifest_files/*; do
         output=$(java -jar add_path_to.jar \
             -context reads \
             -manifest "${manifest}" \
-            -userName Webin-1 \
+            -userName username \
             -password password \
             -submit)
 
