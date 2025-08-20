@@ -2,11 +2,6 @@ import argparse
 import pandas as pd
 import os
 
-# Parse the arguments
-parser = argparse.ArgumentParser(description='Generate ENA manifest files')
-parser.add_argument("-i", "--infile", help=".tsv file with the information for manifest file", required=True)
-args = parser.parse_args()
-
 def create_manifest(csv_file):
     # Read in the csv file, converting NaN values to an empty string
     df = pd.read_csv(csv_file, keep_default_na=False, sep = '\t')
@@ -80,5 +75,13 @@ FASTQ   {fastq_reverse}
             with open(f"{sample_accession}/{sample_accession}_manifest.txt", "w") as manifest_save:
                 manifest_save.write(manifest)
 
-# Call the function
-create_manifest(args.infile)
+def main():
+    parser = argparse.ArgumentParser(description='Generate ENA manifest files')
+    parser.add_argument("-i", "--infile", help=".tsv file with the information for manifest file", required=True)
+    args = parser.parse_args()
+
+    create_manifest(args.infile)
+
+# Run main() if script is executed directly
+if __name__ == "__main__":
+    main()
